@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* optional tailwindcss plugins */
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+/* daisyui theme configuration.
+see https://daisyui.com/docs/themes/ for list of themes, available color variables, and more.
+
+or, you can replace this all with `@plugin "daisyui";` and let daisyui handle them all. */
+
+@plugin "daisyui" {
+  /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
+  themes: light, dark;
+}
+
+@plugin "daisyui/theme" {
+  /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
+  name: "light";
+  /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
+  default: true;
+  --color-primary: #605dff;
+}
+
+@plugin "daisyui/theme" {
+  /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
+  name: "dark";
+  /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
+  prefersdark: true;
+  --color-primary: #422ad5;
+}

@@ -1,0 +1,15 @@
+node_modules/
+
+# web
+web/.svelte-kit
+web/dist
+
+# env
+.env
+.envrc
+.direnv
+
+# etc
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

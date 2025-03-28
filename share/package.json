@@ -1,0 +1,8 @@
+{
+  "name": "share",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.2.6",
+    "typescript": "^5.8.2"
+  }
+}
