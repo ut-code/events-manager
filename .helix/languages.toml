@@ -1,23 +1,23 @@
 [[language]]
 name = "svelte"
-formatter = { command = "bun", args = ["prettier", "--parser", "svelte"] }
+formatter = { command = "bunx", args = ["prettier", "--parser", "svelte"] }
 language-servers = ["tailwindcss-ls", "svelteserver"]
 
 [[language]]
 name = "typescript"
-formatter = { command = "bun", args = ["prettier", "--parser", "typescript"] }
+formatter = { command = "bunx", args = ["prettier", "--parser", "typescript"] }
 [[language]]
 name = "javascript"
-formatter = { command = "bun", args = ["prettier", "--parser", "typescript"] }
+formatter = { command = "bunx", args = ["prettier", "--parser", "typescript"] }
 
 [[language]]
 name = "json"
-formatter = { command = "bun", args = ["prettier", "--parser", "json"] }
+formatter = { command = "bunx", args = ["prettier", "--parser", "json"] }
 language-servers = ["vscode-json-language-server"]
 [[language]]
 name = "jsonc"
-formatter = { command = "bun", args = ["prettier", "--parser", "json"] }
+formatter = { command = "bunx", args = ["prettier", "--parser", "json"] }
 language-servers = ["vscode-json-language-server"]
 [[language]]
 name = "yaml"
-formatter = { command = "bun", args = ["prettier", "--parser", "yaml"] }
+formatter = { command = "bunx", args = ["prettier", "--parser", "yaml"] }

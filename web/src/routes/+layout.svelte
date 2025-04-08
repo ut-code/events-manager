@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-  <meta property="og:site_name" content="SvelteKit project template" />
+  <meta property="og:site_name" content="Events Manager" />
   <meta property="og:url" content={page.url.toString()} />
 </svelte:head>
 

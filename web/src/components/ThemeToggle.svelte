@@ -17,7 +17,6 @@
     light: "fe:sunny-o",
     dark: "fe:moon",
   };
-  $inspect(theme.current);
 </script>
 
 <div class="dropdown w-32">

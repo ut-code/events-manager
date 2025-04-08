@@ -1,10 +1,11 @@
 <script lang="ts">
   type Props = {
     title: string; // title of page. used for <title> and og:title
-    thumbnail: string; // thumbnail of page. used for og:image. TIP: svgs don't work on discord
-    description: string; // description of page. used for og:description
+    thumbnail: string | null; // thumbnail of page. used for og:image. TIP: svgs don't work on discord
+    description: string | null; // description of page. used for og:description
   };
-  const { title, thumbnail, description }: Props = $props();
+  const { title: _title, thumbnail, description }: Props = $props();
+  const title = $derived(`${_title} | Events Manager`);
 </script>
 
 <svelte:head>

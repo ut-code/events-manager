@@ -20,7 +20,6 @@ or, you can replace this all with `@plugin "daisyui";` and let daisyui handle th
   name: "light";
   /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
   default: true;
-  --color-primary: #605dff;
 }
 
 @plugin "daisyui/theme" {
@@ -28,5 +27,4 @@ or, you can replace this all with `@plugin "daisyui";` and let daisyui handle th
   name: "dark";
   /* biome-ignore lint/correctness/noUnknownProperty: daisyui config */
   prefersdark: true;
-  --color-primary: #422ad5;
 }

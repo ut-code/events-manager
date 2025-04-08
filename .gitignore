@@ -1,4 +1,5 @@
 node_modules/
+local.db
 
 # web
 web/.svelte-kit
