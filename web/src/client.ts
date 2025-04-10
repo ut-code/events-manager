@@ -1,4 +1,4 @@
-import type { App } from "+server/index";
+import type { App } from "+server/index.ts";
 import { hc } from "hono/client";
 
 type Fetch = typeof fetch;

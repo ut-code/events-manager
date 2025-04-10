@@ -12,18 +12,18 @@ const Text = v.pipe(
   v.transform((text) => text.trim()),
   v.minLength(1),
 );
+const SQLiteBool = v.pipe(
+  v.boolean(),
+  v.transform((b) => Number(b)),
+);
+export type InsertEvent = v.InferInput<typeof InsertEvent>;
 export const InsertEvent = v.object({
   id: v.optional(v.number()),
   name: Text,
   description: Text,
-  date: v.pipe(
-    v.string(),
-    v.transform((t) => new Date(t)),
-    v.date(),
-    v.transform((d) => d.toString()),
-  ),
+  start: v.number(),
+  end: v.number(),
+  allday: SQLiteBool,
+  multiday: SQLiteBool,
 });
-export const SelectEvent = v.pipe(
-  createSelectSchema(s.eventsTable),
-  v.transform((o) => ({ ...o, date: new Date(o.date) })),
-);
+export const SelectEvent = createSelectSchema(s.eventsTable);

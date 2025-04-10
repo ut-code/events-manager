@@ -11,7 +11,7 @@
     <li class="list-row">
       <span>{event.name}</span>
       <span>{event.description}</span>
-      <span>{event.date}</span>
+      <span>{new Date(event.start * 1000)}</span>
     </li>
   {:else}
     <li>No events yet.</li>

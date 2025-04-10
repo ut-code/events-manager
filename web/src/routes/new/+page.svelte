@@ -1,74 +1,105 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
+  import { flatten, safeParse } from "valibot";
+
   import { InsertEvent } from "+server/validator/schema.ts";
-  import { Control, Field, FieldErrors, Label } from "formsnap";
-  import SuperDebug, { dateProxy, superForm } from "sveltekit-superforms";
-  import { valibotClient } from "sveltekit-superforms/adapters";
+  import { GetsetDatetime } from "+web/lib/GetsetDatetime.svelte";
+  const form: Partial<InsertEvent> = $state({});
+  let errors: Record<string, string | string[] | undefined> | undefined =
+    $state(undefined);
 
-  const { data } = $props();
-  const form = superForm(data.form, {
-    validators: valibotClient(InsertEvent),
-  });
-  const { form: formData } = form;
-
-  const date = dateProxy(formData, "date", {});
-  $inspect($date);
+  const startDate = new GetsetDatetime(
+    () => form.start,
+    (val) => {
+      form.start = val;
+    },
+  );
+  const endDate = new GetsetDatetime(
+    () => form.end,
+    (val) => {
+      form.end = val;
+    },
+  );
 </script>
 
-<form method="POST" use:enhance class="mx-auto flex max-w-md flex-col gap-2">
-  <h1 class="text-xl">Create Event</h1>
-  <Field {form} name="name">
-    <Control>
-      {#snippet children({ props })}
-        <Label class="floating-label mt-4">
-          <span>Name</span>
+<main>
+  <form
+    class="mx-auto mt-10 flex max-w-lg flex-col gap-2 pt-2"
+    onsubmit={(ev) => {
+      ev.preventDefault();
+      const result = safeParse(InsertEvent, form);
+      if (!result.success) {
+        console.error(result.issues);
+        errors = flatten(result.issues).nested;
+        return;
+      }
+      errors = undefined;
+      console.log("success!");
+    }}
+  >
+    <h1 class="pb-2 text-xl">Create new event</h1>
+
+    {@render TextInput("Name (required)", { name: "name", required: true })}
+    {@render TextInput("Description", { name: "description" })}
+    <fieldset
+      class="fieldset bg-base-100 border-base-300 rounded-xl border p-4"
+    >
+      <legend class="fieldset-legend">Date options</legend>
+      <label class="fieldset-label">
+        <input type="checkbox" class="toggle" bind:checked={form.allday} />
+        <span class="select-none">All day event?</span>
+      </label>
+      <label class="fieldset-label">
+        <input type="checkbox" class="toggle" bind:checked={form.multiday} />
+        <span class="select-none">Does it span across multiple days?</span>
+      </label>
+    </fieldset>
+
+    <fieldset
+      class="fieldset bg-base-100 border-base-300 rounded-xl border p-4"
+    >
+      <legend class="fieldset-legend">Date</legend>
+      <label class="fieldset-label">
+        <input type="date" class="input" required bind:value={startDate.date} />
+        {#if form.multiday}<span>Start</span>{/if}
+      </label>
+      {#if form.multiday}
+        <label class="fieldset-label">
           <input
-            {...props}
-            class="input w-full"
-            placeholder="Name"
-            bind:value={$formData.name}
-            required
-          />
-        </Label>
-      {/snippet}
-    </Control>
-    <FieldErrors class="fieldset-label text-error" />
-  </Field>
-  <Field {form} name="description">
-    <Control>
-      {#snippet children({ props })}
-        <Label class="floating-label mt-4">
-          <span>Description</span>
-          <input
-            {...props}
-            class="input w-full"
-            placeholder="Description"
-            bind:value={$formData.description}
-            required
-          />
-        </Label>
-      {/snippet}
-    </Control>
-    <FieldErrors class="fieldset-label text-error" />
-  </Field>
-  <Field {form} name="date">
-    <Control>
-      {#snippet children({ props })}
-        <Label class="floating-label mt-4">
-          <span>Date</span>
-          <input
-            {...props}
             type="date"
-            class="input w-full"
-            placeholder="Date"
-            bind:value={$date}
+            class="input"
             required
+            bind:value={endDate.date}
+            min={startDate.date}
           />
-        </Label>
-      {/snippet}
-    </Control>
-    <FieldErrors class="fieldset-label text-error" />
-  </Field>
-  <button type="submit" class="btn btn-small">Create</button>
-</form>
-<SuperDebug data={$formData} />
+          End
+        </label>
+      {/if}
+    </fieldset>
+    <button type="submit" class="btn btn-primary mt-4">Create</button>
+  </form>
+</main>
+
+{#snippet TextInput(
+  label: string,
+  options: {
+    name: keyof typeof form;
+    required?: boolean;
+  },
+)}
+  {@const { name, required } = options}
+  <label class="floating-label">
+    <span>{label}</span>
+    <input
+      {name}
+      placeholder={label}
+      pattern=".*[^ ].*"
+      bind:value={form[name]}
+      {required}
+      class="input"
+    />
+  </label>
+  {@render Errors(errors?.[name])}
+{/snippet}
+{#snippet Errors(errors: string | string[] | undefined)}
+  <p class="fieldset-label text-error">{errors}</p>
+{/snippet}

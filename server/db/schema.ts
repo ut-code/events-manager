@@ -8,8 +8,11 @@ export const usersTable = sqliteTable("users", {
 export const eventsTable = sqliteTable("events", {
   id: int().primaryKey(),
   name: text().notNull(),
-  description: text(),
-  date: text().notNull(), // TODO: date + time? multi-date?
+  description: text().notNull(),
+  start: int().notNull(), // unix timestamp = JS Time representation / 1000
+  end: int().notNull(), // same as above
+  allday: int().notNull(), // 0 OR 1
+  multiday: int().notNull(),
 });
 export const joinsTable = sqliteTable("joins", {
   userId: int().references(() => usersTable.id),
