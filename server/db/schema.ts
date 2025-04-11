@@ -8,7 +8,7 @@ export const usersTable = sqliteTable("users", {
 export const eventsTable = sqliteTable("events", {
   id: int().primaryKey(),
   name: text().notNull(),
-  description: text().notNull(),
+  description: text(),
   start: int().notNull(), // unix timestamp = JS Time representation / 1000
   end: int().notNull(), // same as above
   allday: int().notNull(), // 0 OR 1

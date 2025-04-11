@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { flatten, safeParse } from "valibot";
+  import { assert, flatten, safeParse } from "valibot";
 
   import { InsertEvent } from "+server/validator/schema.ts";
+  import { createClient } from "+web/client";
   import { GetsetDatetime } from "+web/lib/GetsetDatetime.svelte";
+
   const form: Partial<InsertEvent> = $state({});
   let errors: Record<string, string | string[] | undefined> | undefined =
     $state(undefined);
+
+  const client = createClient({ fetch });
 
   const startDate = new GetsetDatetime(
     () => form.start,
@@ -23,9 +27,18 @@
 
 <main>
   <form
-    class="mx-auto mt-10 flex max-w-lg flex-col gap-2 pt-2"
-    onsubmit={(ev) => {
+    class="item-end mx-auto mt-10 flex max-w-lg flex-col gap-2 pt-2"
+    onsubmit={async (ev) => {
       ev.preventDefault();
+      if (form.allday) {
+        startDate.time = "00:00";
+        endDate.time = "00:00";
+      }
+      if (!form.multiday) {
+        endDate.date = startDate.date;
+        console.log(startDate.date);
+      }
+      console.log("form", $state.snapshot(form));
       const result = safeParse(InsertEvent, form);
       if (!result.success) {
         console.error(result.issues);
@@ -33,7 +46,15 @@
         return;
       }
       errors = undefined;
-      console.log("success!");
+      assert(InsertEvent, form); // this should not throw
+      const res = await client.events.$post({
+        json: form,
+      });
+      if (!res.ok)
+        throw new Error(
+          `Failed to post: status ${res.status} with text: ${await res.text()}`,
+        );
+      console.log("successfully created");
     }}
   >
     <h1 class="pb-2 text-xl">Create new event</h1>
@@ -55,26 +76,59 @@
     </fieldset>
 
     <fieldset
-      class="fieldset bg-base-100 border-base-300 rounded-xl border p-4"
+      class="fieldset bg-base-100 border-base-300 flex-col gap-4 rounded-xl border p-4"
     >
-      <legend class="fieldset-legend">Date</legend>
+      <legend class="fieldset-legend">
+        {#if form.multiday}Start{/if}
+        Date
+      </legend>
       <label class="fieldset-label">
         <input type="date" class="input" required bind:value={startDate.date} />
-        {#if form.multiday}<span>Start</span>{/if}
       </label>
-      {#if form.multiday}
+      {#if !form.allday}
         <label class="fieldset-label">
           <input
-            type="date"
+            type="time"
             class="input"
             required
-            bind:value={endDate.date}
-            min={startDate.date}
+            bind:value={startDate.time}
           />
-          End
+          Start
         </label>
+        {#if !form.multiday}
+          <label class="fieldset-label">
+            <input
+              type="time"
+              class="input"
+              required
+              bind:value={endDate.time}
+            />
+            End
+          </label>
+        {/if}
       {/if}
     </fieldset>
+    {#if form.multiday}
+      <fieldset
+        class="fieldset bg-base-100 border-base-300 rounded-xl border p-4"
+      >
+        <legend class="fieldset-legend">End Date</legend>
+        <label class="fieldset-label">
+          <input type="date" class="input" required bind:value={endDate.date} />
+        </label>
+        {#if !form.allday}
+          <label class="fieldset-label">
+            <input
+              type="time"
+              class="input"
+              required
+              bind:value={endDate.time}
+            />
+            End
+          </label>
+        {/if}
+      </fieldset>
+    {/if}
     <button type="submit" class="btn btn-primary mt-4">Create</button>
   </form>
 </main>

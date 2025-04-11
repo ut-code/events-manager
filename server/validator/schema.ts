@@ -20,7 +20,7 @@ export type InsertEvent = v.InferInput<typeof InsertEvent>;
 export const InsertEvent = v.object({
   id: v.optional(v.number()),
   name: Text,
-  description: Text,
+  description: v.optional(Text),
   start: v.number(),
   end: v.number(),
   allday: SQLiteBool,

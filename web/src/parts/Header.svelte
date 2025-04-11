@@ -15,7 +15,7 @@
   <span class="flex-grow" aria-hidden="true"></span>
   <ThemeToggle />
   <a
-    href="https://github.com/ut-code/sveltekit-project-template"
+    href="https://github.com/ut-code/events-manager"
     target="_blank"
     class="my-auto w-8"
   >
