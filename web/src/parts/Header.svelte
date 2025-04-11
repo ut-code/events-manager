@@ -4,7 +4,7 @@
 </script>
 
 <header
-  class="bg-base-100/60 border-base-300 sticky top-0 m-6 flex h-14 w-full flex-row items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
+  class="bg-base-100/60 border-base-300 sticky top-0 m-6 flex h-14 flex-row items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
 >
   <a
     href="/"

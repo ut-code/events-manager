@@ -8,12 +8,13 @@
 
 <PageHead title="Events Manager" thumbnail={null} description={null} />
 
-{#await data.events}
-  loading...
-{:then events}
-  <EventList {events} />
-{:catch err}
-  <ErrorPage {err} />
-{/await}
-
-<a href="/new" class="btn btn-primary">create new</a>
+<main class="mx-auto max-w-lg">
+  {#await data.events}
+    loading...
+  {:then events}
+    <EventList {events} />
+  {:catch err}
+    <ErrorPage {err} />
+  {/await}
+  <a href="/new" class="btn btn-primary mr-0 ml-auto">create new</a>
+</main>

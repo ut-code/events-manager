@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { SelectEvent } from "+server/validator/schema.ts";
+  import EventItem from "./EventItem.svelte";
   type Props = {
     events: SelectEvent[];
   };
@@ -8,12 +9,8 @@
 
 <ul class="list">
   {#each events as event (event.id)}
-    <li class="list-row">
-      <span>{event.name}</span>
-      <span>{event.description}</span>
-      <span>{new Date(event.start * 1000)}</span>
-    </li>
+    <EventItem {event} />
   {:else}
-    <li>No events yet.</li>
+    <li class="list-row">No events yet.</li>
   {/each}
 </ul>
