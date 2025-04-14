@@ -36,6 +36,11 @@ Vite サーバーが :3000 で起動します。
 1. `bun run build`
 2. `bun run preview`
 
+### package.json の `dependencies` と `devDependencies` の運用
+
+- `dependencies`: ビルドに必要なパッケージ
+- `devDependencies`: 開発時にのみ必要なパッケージ
+
 ## 運用
 
 ### デプロイ

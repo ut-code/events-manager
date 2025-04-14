@@ -1,10 +1,10 @@
 <script lang="ts">
   import ThemeToggle from "+web/components/ThemeToggle.svelte";
-  import Icon from "@iconify/svelte";
+  import GitHub from "~icons/fe/github";
 </script>
 
 <header
-  class="bg-base-100/60 border-base-300 sticky top-0 m-6 flex h-14 flex-row items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
+  class="bg-base-100/60 border-base-300 sticky top-6 m-6 flex h-14 flex-row items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
 >
   <a
     href="/"
@@ -19,7 +19,7 @@
     target="_blank"
     class="my-auto w-8"
   >
-    <Icon icon="fe:github" class="mx-auto text-3xl" />
+    <GitHub class="mx-auto text-3xl" />
   </a>
   <span aria-hidden="true"></span>
 </header>

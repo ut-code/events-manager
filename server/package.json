@@ -3,19 +3,19 @@
   "type": "module",
   "module": "index.ts",
   "devDependencies": {
-    "@types/bun": "^1.2.9",
-    "drizzle-kit": "^0.30.6"
+    "@types/bun": "1.2.9",
+    "drizzle-kit": "0.30.6"
   },
   "peerDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "5.8.3"
   },
   "dependencies": {
-    "@hono/valibot-validator": "^0.5.2",
-    "@libsql/client": "^0.15.2",
-    "drizzle-orm": "^0.41.0",
-    "drizzle-valibot": "^0.4.1",
-    "hono": "^4.7.6",
-    "valibot": "^1.0.0"
+    "@hono/valibot-validator": "0.5.2",
+    "@libsql/client": "0.15.3",
+    "drizzle-orm": "0.41.0",
+    "drizzle-valibot": "0.4.1",
+    "hono": "4.7.6",
+    "valibot": "1.0.0"
   },
   "scripts": {
     "db": "bun drizzle-kit"

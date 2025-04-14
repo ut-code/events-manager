@@ -1,5 +1,8 @@
 <script lang="ts">
-  import Icon from "@iconify/svelte";
+  import ThemeOS from "~icons/fe/laptop";
+  import ThemeDark from "~icons/fe/moon";
+  import ThemeLight from "~icons/fe/sunny-o";
+
   import { PersistedState } from "runed";
   const theme = new PersistedState<(typeof themes)[number]>(
     "theme-preference",
@@ -13,10 +16,12 @@
     dark: "Dark",
   };
   const icons = {
-    "": "fe:laptop",
-    light: "fe:sunny-o",
-    dark: "fe:moon",
+    "": ThemeOS,
+    light: ThemeLight,
+    dark: ThemeDark,
   };
+
+  const Icon = $derived(icons[theme.current]);
 </script>
 
 <div class="dropdown w-32">
@@ -26,7 +31,7 @@
     popovertargetaction="toggle"
   >
     <span class="w-4">
-      <Icon icon={icons[theme.current]} />
+      <Icon />
     </span>
     <span>{labels[theme.current]}</span>
   </button>

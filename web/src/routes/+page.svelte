@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { createClient } from "+web/client.js";
   import ErrorPage from "+web/components/ErrorPage.svelte";
   import EventList from "+web/components/EventList.svelte";
   import PageHead from "+web/parts/PageHead.svelte";
 
+  const client = createClient({ fetch });
   const { data } = $props();
 </script>
 
@@ -12,7 +14,15 @@
   {#await data.events}
     loading...
   {:then events}
-    <EventList {events} />
+    <EventList
+      {events}
+      refetch={async () => {
+        const r = await client.events.$get();
+        if (!r.ok)
+          throw new Error(`got status ${r.status} with text ${await r.text()}`);
+        return await r.json();
+      }}
+    />
   {:catch err}
     <ErrorPage {err} />
   {/await}

@@ -4,12 +4,14 @@
   import { InsertEvent } from "+server/validator/schema.ts";
   import { createClient } from "+web/client";
   import { GetsetDatetime } from "+web/lib/GetsetDatetime.svelte";
+  import { toastContext } from "+web/lib/toast/controller.svelte";
 
   const form: Partial<InsertEvent> = $state({});
   let errors: Record<string, string | string[] | undefined> | undefined =
     $state(undefined);
 
   const client = createClient({ fetch });
+  const toast = toastContext.get();
 
   const startDate = new GetsetDatetime(
     () => form.start,
@@ -54,7 +56,10 @@
         throw new Error(
           `Failed to post: status ${res.status} with text: ${await res.text()}`,
         );
-      console.log("successfully created");
+      toast.push({
+        content: "successfully created",
+        color: "alert-success",
+      });
     }}
   >
     <h1 class="pb-2 text-xl">Create new event</h1>
