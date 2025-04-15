@@ -24,7 +24,7 @@
     "fix": "bun format",
     "format": "bun biome check . --fix --unsafe && bun prettier . --write",
     "install:production": "bun i --frozen-lockfile --production --ignore-scripts",
-    "db": "cd server; bun db"
+    "db": "cd server; bun --bun --env-file=../.env db"
   },
   "type": "module",
   "workspaces": [
