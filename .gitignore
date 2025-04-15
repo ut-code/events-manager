@@ -4,6 +4,9 @@ local.db
 # web
 web/.svelte-kit
 web/dist
+# ??
+web/node_modules/.mf
+web/node_modules/.vite-temp
 
 # env
 .env
