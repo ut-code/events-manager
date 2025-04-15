@@ -5,7 +5,6 @@ import { InsertEvent } from "@stack/server/validator/schema.ts";
 import { stringToNumber } from "@stack/server/validator/valibot-utils";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
-import * as v from "valibot";
 
 const route = new Hono()
   .get("/", async (c) => {
