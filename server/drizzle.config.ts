@@ -18,8 +18,8 @@ const uniqueOptions: ReturnType<typeof defineConfig> = (() => {
       return {
         dialect: "turso",
         dbCredentials: {
-          url: env("DATABASE_URL"),
-          authToken: env("DATABASE_AUTH_TOKEN"),
+          url: env("TURSO_URL"),
+          authToken: env("TURSO_AUTH_TOKEN"),
         },
       };
     default:

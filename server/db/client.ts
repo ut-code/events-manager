@@ -27,8 +27,8 @@ function getClient(c: Context) {
       return client;
     case "turso":
       client = createClient({
-        url: env(c, "DATABASE_URL"),
-        authToken: env(c, "DATABASE_AUTH_TOKEN"),
+        url: env(c, "TURSO_URL"),
+        authToken: env(c, "TURSO_AUTH_TOKEN"),
       });
       console.log("[db] database client: cache miss");
       return client;
