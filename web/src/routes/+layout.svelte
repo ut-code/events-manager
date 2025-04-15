@@ -2,11 +2,11 @@
   import "../app.css";
 
   import { page } from "$app/state";
-  import { ModalController } from "+web/lib/modal/controller.svelte";
-  import Modal from "+web/lib/modal/provider.svelte";
-  import { ToastController } from "+web/lib/toast/controller.svelte";
-  import Toast from "+web/lib/toast/provider.svelte";
-  import Header from "+web/parts/Header.svelte";
+  import { ModalController } from "@/lib/modal/controller.svelte";
+  import Modal from "@/lib/modal/provider.svelte";
+  import { ToastController } from "@/lib/toast/controller.svelte";
+  import Toast from "@/lib/toast/provider.svelte";
+  import Header from "@/parts/Header.svelte";
 
   const toast = new ToastController();
   const modal = new ModalController();

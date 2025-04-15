@@ -1,10 +1,10 @@
 <script lang="ts">
   import { assert, flatten, safeParse } from "valibot";
 
-  import { InsertEvent } from "+server/validator/schema.ts";
-  import { createClient } from "+web/client";
-  import { GetsetDatetime } from "+web/lib/GetsetDatetime.svelte";
-  import { toastContext } from "+web/lib/toast/controller.svelte";
+  import { createClient } from "@/client";
+  import { GetsetDatetime } from "@/lib/GetsetDatetime.svelte";
+  import { toastContext } from "@/lib/toast/controller.svelte";
+  import { InsertEvent } from "@stack/server/validator/schema.ts";
 
   const form: Partial<InsertEvent> = $state({});
   let errors: Record<string, string | string[] | undefined> | undefined =

@@ -23,14 +23,6 @@
     "noFallthroughCasesInSwitch": true,
 
     // stricter flags -- you may opt them out
-    "noUncheckedIndexedAccess": true,
-
-    // aliases
-    "baseUrl": ".",
-    "paths": {
-      "+server/*": ["./server/*"],
-      "+share/*": ["./share/*"],
-      "+web/*": ["./web/src/*"]
-    }
+    "noUncheckedIndexedAccess": true
   }
 }

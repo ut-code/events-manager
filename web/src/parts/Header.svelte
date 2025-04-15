@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ThemeToggle from "+web/components/ThemeToggle.svelte";
+  import ThemeToggle from "@/components/ThemeToggle.svelte";
   import GitHub from "~icons/fe/github";
 </script>
 

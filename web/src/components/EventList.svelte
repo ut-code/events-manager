@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SelectEvent } from "+server/validator/schema.ts";
+  import type { SelectEvent } from "@stack/server/validator/schema.ts";
   import EventItem from "./EventItem.svelte";
 
   type Props = {

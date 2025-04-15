@@ -1,4 +1,4 @@
-import { query } from "+server/validator/hono";
+import { query } from "@stack/server/validator/hono";
 import { Hono } from "hono/tiny";
 import * as v from "valibot";
 

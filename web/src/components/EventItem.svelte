@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SelectEvent } from "+server/validator/schema.ts";
+  import type { SelectEvent } from "@stack/server/validator/schema.ts";
   import { lightFormat } from "date-fns";
   import { Popover } from "melt/builders";
   import { slide } from "svelte/transition";

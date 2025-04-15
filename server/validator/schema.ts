@@ -1,4 +1,4 @@
-import * as s from "+server/db/schema.ts";
+import * as s from "@stack/server/db/schema.ts";
 import type { InferSelectModel } from "drizzle-orm";
 import { createSelectSchema } from "drizzle-valibot";
 import * as v from "valibot";

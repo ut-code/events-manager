@@ -1,8 +1,8 @@
 // you don't need to touch this file,
 // except for adding new request methods.
 
-import app from "+server/index.ts";
-import { panic } from "+share/stdlib.ts";
+import app from "@stack/server/index.ts";
+import { panic } from "@stack/share/stdlib.ts";
 import type { RequestEvent } from "@sveltejs/kit";
 
 async function hook(event: RequestEvent) {

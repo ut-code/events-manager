@@ -8,9 +8,7 @@ const config = {
   kit: {
     adapter: adapter(),
     alias: {
-      "+server": "../server",
-      "+share": "../share",
-      "+web/*": "./src/*",
+      "@/*": "./src/*",
     },
   },
 };

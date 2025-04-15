@@ -1,5 +1,5 @@
-import { env, panic } from "+server/lib";
 import { type Client, createClient } from "@libsql/client";
+import { env, panic } from "@stack/server/lib";
 import { drizzle } from "drizzle-orm/libsql";
 import type { Context } from "hono";
 

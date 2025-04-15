@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { SelectEvent } from "+server/validator/schema";
-  import { createClient } from "+web/client";
+  import { createClient } from "@/client";
+  import type { SelectEvent } from "@stack/server/validator/schema";
   import type { Popover } from "melt/builders";
 
   type Props = {

@@ -1,8 +1,8 @@
-import { db } from "+server/db/client";
-import { eventsTable } from "+server/db/schema.ts";
-import { json, param } from "+server/validator/hono";
-import { InsertEvent } from "+server/validator/schema.ts";
-import { stringToNumber } from "+server/validator/valibot-utils";
+import { db } from "@stack/server/db/client";
+import { eventsTable } from "@stack/server/db/schema.ts";
+import { json, param } from "@stack/server/validator/hono";
+import { InsertEvent } from "@stack/server/validator/schema.ts";
+import { stringToNumber } from "@stack/server/validator/valibot-utils";
 import { eq } from "drizzle-orm";
 import { Hono } from "hono";
 import * as v from "valibot";

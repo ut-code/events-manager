@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { createClient } from "+web/client.js";
-  import ErrorPage from "+web/components/ErrorPage.svelte";
-  import EventList from "+web/components/EventList.svelte";
-  import PageHead from "+web/parts/PageHead.svelte";
+  import { createClient } from "@/client.ts";
+  import ErrorPage from "@/components/ErrorPage.svelte";
+  import EventList from "@/components/EventList.svelte";
+  import PageHead from "@/parts/PageHead.svelte";
 
   const client = createClient({ fetch });
   const { data } = $props();

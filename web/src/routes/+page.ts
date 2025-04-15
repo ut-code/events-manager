@@ -1,4 +1,4 @@
-import { createClient } from "+web/client";
+import { createClient } from "@/client";
 import type { PageLoad } from "./$types.ts";
 
 export const load: PageLoad = ({ fetch }) => {
