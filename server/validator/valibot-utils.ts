@@ -5,4 +5,3 @@ export const stringToNumber = pipe(
   transform((v) => Number.parseInt(v, 10)),
   number(),
 );
-
