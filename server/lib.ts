@@ -6,6 +6,10 @@ export function panic(...context: unknown[]): never {
   throw new Error(context.join(", "));
 }
 
-export function env(c: Context, name: string) {
-  return hono_env(c)[name] ?? panic(`Environment variable ${name} not found`);
+export function env(c: Context, name: string, options?: { fallback?: string }) {
+  return (
+    hono_env(c)[name] ??
+    options?.fallback ??
+    panic(`Environment variable ${name} not found`)
+  );
 }

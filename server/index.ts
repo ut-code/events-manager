@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 
+import { env } from "./lib.ts";
 import events from "./routes/events.ts";
 
 function sleep(time: number) {
@@ -9,8 +10,9 @@ function sleep(time: number) {
 const app = new Hono()
   .basePath("/api")
   // TODO: exclude this on prod
-  .use(async (_c, next) => {
-    await sleep(1000);
+  .use(async (c, next) => {
+    const latency = env(c, "ARTIFICIAL_LATENCY", { fallback: "0" });
+    await sleep(Number.parseInt(latency));
     return await next();
   })
   .route("/events", events);

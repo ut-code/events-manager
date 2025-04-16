@@ -19,9 +19,9 @@
 <li class="list-row" transition:slide>
   <span class="font-medium">{event.name}</span>
   <span>{lightFormat(start, "M/d")}</span>
-  <span class="list-col-grow line-clamp-1 text-sm font-light"
-    >{event.description}</span
-  >
+  <span class="list-col-grow line-clamp-1 text-sm font-light">
+    {event.description}
+  </span>
   <span>
     {#if event.allday}
       {lightFormat(start, "yyyy/MM/dd")}
