@@ -2,17 +2,20 @@
   import { createClient } from "@/client.ts";
   import ErrorPage from "@/components/ErrorPage.svelte";
   import EventList from "@/components/EventList.svelte";
+  import swr from "@/lib/swr.svelte.ts";
   import PageHead from "@/parts/PageHead.svelte";
+  import { Event } from "@stack/server/validator/schema";
+  import { array } from "valibot";
 
   const client = createClient({ fetch });
   const { data } = $props();
-  let processing = $state(false);
+  const promise = swr("/ events", data.events, array(Event));
 </script>
 
 <PageHead title="Events Manager" thumbnail={null} description={null} />
 
 <main class="mx-auto max-w-lg">
-  {#await data.events}
+  {#await promise.current}
     loading...
   {:then events}
     <EventList

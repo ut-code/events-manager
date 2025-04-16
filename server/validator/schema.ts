@@ -39,3 +39,13 @@ export const SelectEvent = v.pipe(
     multiday: !!event.multiday,
   })),
 );
+export type Event = v.InferInput<typeof Event>;
+export const Event = v.object({
+  id: v.number(),
+  name: v.string(),
+  description: v.nullable(v.string()),
+  start: v.number(),
+  end: v.number(),
+  allday: v.boolean(),
+  multiday: v.boolean(),
+});
