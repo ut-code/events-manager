@@ -9,13 +9,12 @@
   const popover = new Popover();
   type Props = {
     event: SelectEvent;
-    onupdate: () => Promise<void>;
+    onupdate: (event: "delete") => Promise<void>;
   };
   const { event, onupdate }: Props = $props();
   const start = $derived(new Date(event.start * 1000));
 </script>
 
-<EventPopover {event} {popover} {onupdate} />
 <li class="list-row" transition:slide>
   <span class="font-medium">{event.name}</span>
   <span>{lightFormat(start, "M/d")}</span>
@@ -32,4 +31,5 @@
   <button {...popover.trigger}>
     <Dots class="h-6 w-6 cursor-pointer" />
   </button>
+  <EventPopover {event} {popover} {onupdate} />
 </li>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import ThemeToggle from "@/components/ThemeToggle.svelte";
   import { debugMode } from "@/globals.svelte";
   import GitHub from "~icons/fe/github";
@@ -18,7 +19,11 @@
     debugger
     <input type="checkbox" class="toggle" bind:checked={debugMode.value} />
   </label>
-  <ThemeToggle />
+  {#if browser}
+    <ThemeToggle />
+  {:else}
+    <span class="btn w-32"><span class="loading loading-spinner"></span></span>
+  {/if}
   <a
     href="https://github.com/ut-code/events-manager"
     target="_blank"

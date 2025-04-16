@@ -61,7 +61,7 @@ export class GetsetDatetime {
         return d;
       })();
     newDate.setFullYear(dates.year);
-    newDate.setMonth(dates.month + 1);
+    newDate.setMonth(dates.month - 1);
     newDate.setDate(dates.date);
     this.datetime = newDate;
   }

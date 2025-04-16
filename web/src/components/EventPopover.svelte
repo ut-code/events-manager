@@ -6,7 +6,7 @@
   type Props = {
     event: SelectEvent;
     popover: Popover;
-    onupdate: () => Promise<void>;
+    onupdate: (event: "delete") => Promise<void>;
   };
   const { event, popover, onupdate }: Props = $props();
   const client = createClient({ fetch });
@@ -33,7 +33,7 @@
               },
             });
           } finally {
-            await onupdate();
+            await onupdate("delete");
             processing = false;
           }
         }}>delete</button

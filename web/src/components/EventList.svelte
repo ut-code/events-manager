@@ -10,10 +10,11 @@
 </script>
 
 <ul class="list">
-  {#each events as event (event.id)}
+  {#each events as event, idx (event.id)}
     <EventItem
       {event}
       onupdate={async () => {
+        events.splice(idx, 1);
         events = await refetch();
       }}
     />
