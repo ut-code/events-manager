@@ -27,7 +27,7 @@ export const InsertEvent = v.pipe(
     multiday: SQLiteBool,
   }),
   v.partialCheck([["start"], ["end"]], (val) => {
-    return val.start < val.end;
+    return val.start <= val.end;
   }),
 );
 export type SelectEvent = v.InferOutput<typeof SelectEvent>;
