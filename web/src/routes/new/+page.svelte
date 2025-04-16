@@ -141,7 +141,12 @@
         </label>
         {#if !form.multiday}
           <label class="fieldset-label">
-            <input type="time" class="input" bind:value={endDate.time} />
+            <input
+              type="time"
+              min={startDate.time}
+              class="input not-focus:user-invalid:border-error not-focus:user-invalid:text-error"
+              bind:value={endDate.time}
+            />
             End (optional)
           </label>
         {/if}
@@ -153,7 +158,13 @@
       >
         <legend class="fieldset-legend">End Date</legend>
         <label class="fieldset-label">
-          <input type="date" class="input" required bind:value={endDate.date} />
+          <input
+            type="date"
+            class="input user-invalid:text-error user-invalid:border-error border"
+            required
+            bind:value={endDate.date}
+            min={startDate.date}
+          />
         </label>
         {#if !form.allday}
           <label class="fieldset-label">
