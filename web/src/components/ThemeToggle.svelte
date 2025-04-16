@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Popover } from "melt/builders";
   import ThemeOS from "~icons/fe/laptop";
   import ThemeDark from "~icons/fe/moon";
   import ThemeLight from "~icons/fe/sunny-o";
@@ -22,32 +23,34 @@
   };
 
   const Icon = $derived(icons[theme.current]);
+
+  const popover = new Popover();
 </script>
 
-<div class="dropdown w-32">
+<div class="w-12 md:w-32">
   <button
+    {...popover.trigger}
     class="btn w-full text-left align-middle text-sm"
-    popovertarget="theme-toggle-dropdown"
-    popovertargetaction="toggle"
   >
     <span class="w-4">
       <Icon />
     </span>
-    <span>{labels[theme.current]}</span>
+    <span class="hidden md:block">{labels[theme.current]}</span>
   </button>
 
-  <ul class="dropdown-content w-40">
+  <div
+    {...popover.content}
+    class="bg-base-100 border-base-300 w-40 rounded-md border"
+  >
     {#each themes as t}
-      <li>
-        <input
-          type="radio"
-          name="theme"
-          class="theme-controller btn btn-block btn-sm justify-start"
-          aria-label={labels[t]}
-          value={t}
-          bind:group={theme.current}
-        />
-      </li>
+      <input
+        type="radio"
+        name="theme"
+        class="theme-controller btn btn-block btn-sm justify-start"
+        aria-label={labels[t]}
+        value={t}
+        bind:group={theme.current}
+      />
     {/each}
-  </ul>
+  </div>
 </div>

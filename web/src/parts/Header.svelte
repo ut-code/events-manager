@@ -6,7 +6,7 @@
 </script>
 
 <header
-  class="bg-base-100/60 border-base-300 sticky top-6 m-6 flex h-14 flex-row items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
+  class="bg-base-100/60 border-base-300 sticky top-6 m-6 flex h-14 flex-row flex-wrap items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
 >
   <a
     href="/"
@@ -15,19 +15,21 @@
     Events Manager
   </a>
   <span class="flex-grow" aria-hidden="true"></span>
-  <label class="fieldset-label">
+  <label class="fieldset-label hidden md:block">
     debugger
     <input type="checkbox" class="toggle" bind:checked={debugMode.value} />
   </label>
   {#if browser}
     <ThemeToggle />
   {:else}
-    <span class="btn w-32"><span class="loading loading-spinner"></span></span>
+    <span class="btn w-12 md:w-32"
+      ><span class="loading loading-spinner"></span></span
+    >
   {/if}
   <a
     href="https://github.com/ut-code/events-manager"
     target="_blank"
-    class="my-auto w-8"
+    class="my-auto hidden w-8 md:block"
   >
     <GitHub class="mx-auto text-3xl" />
   </a>
