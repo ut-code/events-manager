@@ -17,14 +17,19 @@ const SQLiteBool = v.pipe(
   v.transform((b) => Number(b)),
 );
 export type InsertEvent = v.InferInput<typeof InsertEvent>;
-export const InsertEvent = v.object({
-  name: Text(1),
-  description: v.nullish(Text(0)),
-  start: v.number(),
-  end: v.number(),
-  allday: SQLiteBool,
-  multiday: SQLiteBool,
-});
+export const InsertEvent = v.pipe(
+  v.object({
+    name: Text(1),
+    description: v.nullish(Text(0)),
+    start: v.number(),
+    end: v.number(),
+    allday: SQLiteBool,
+    multiday: SQLiteBool,
+  }),
+  v.partialCheck([["start"], ["end"]], (val) => {
+    return val.start < val.end;
+  }),
+);
 export type SelectEvent = v.InferOutput<typeof SelectEvent>;
 export const SelectEvent = v.pipe(
   createSelectSchema(s.eventsTable),
