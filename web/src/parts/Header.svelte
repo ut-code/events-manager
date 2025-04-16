@@ -1,5 +1,6 @@
 <script lang="ts">
   import ThemeToggle from "@/components/ThemeToggle.svelte";
+  import { debugMode } from "@/globals.svelte";
   import GitHub from "~icons/fe/github";
 </script>
 
@@ -13,6 +14,10 @@
     Events Manager
   </a>
   <span class="flex-grow" aria-hidden="true"></span>
+  <label class="fieldset-label">
+    debugger
+    <input type="checkbox" class="toggle" bind:checked={debugMode.value} />
+  </label>
   <ThemeToggle />
   <a
     href="https://github.com/ut-code/events-manager"

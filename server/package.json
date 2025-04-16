@@ -12,7 +12,7 @@
   "dependencies": {
     "@hono/valibot-validator": "0.5.2",
     "@libsql/client": "0.15.3",
-    "@stack/share": "workspace:*",
+    "@stack/share": "workspace:share",
     "drizzle-orm": "0.41.0",
     "drizzle-valibot": "0.4.1",
     "hono": "4.7.6",

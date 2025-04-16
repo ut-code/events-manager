@@ -15,8 +15,11 @@
 
 <div {...popover.content} class="round-xl border-base-200 bg-base-100 border-2">
   <ul
-    class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+    class="menu dropdown-content bg-base-100 rounded-box z-1 flex w-52 flex-col gap-2 p-2 shadow-sm"
   >
+    <li>
+      <a class="btn btn-accent" href={`/edit/${event.id}`}>edit</a>
+    </li>
     <li>
       <button
         class="btn btn-error"

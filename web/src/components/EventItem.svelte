@@ -12,20 +12,24 @@
     onupdate: () => Promise<void>;
   };
   const { event, onupdate }: Props = $props();
+  const start = $derived(new Date(event.start * 1000));
 </script>
 
 <EventPopover {event} {popover} {onupdate} />
 <li class="list-row" transition:slide>
-  <span>{event.name}</span>
-  <span>{event.description}</span>
+  <span class="font-medium">{event.name}</span>
+  <span>{lightFormat(start, "M/d")}</span>
+  <span class="list-col-grow line-clamp-1 text-sm font-light"
+    >{event.description}</span
+  >
   <span>
     {#if event.allday}
-      {lightFormat(new Date(event.start * 1000), "yyyy/MM/dd")}
+      {lightFormat(start, "yyyy/MM/dd")}
     {:else}
-      {lightFormat(new Date(event.start * 1000), "yyyy/MM/dd hh:mm")}
+      {lightFormat(start, "yyyy/MM/dd HH:mm")}
     {/if}
   </span>
   <button {...popover.trigger}>
-    <Dots />
+    <Dots class="h-6 w-6 cursor-pointer" />
   </button>
 </li>

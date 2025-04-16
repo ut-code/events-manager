@@ -6,6 +6,7 @@
 
   const client = createClient({ fetch });
   const { data } = $props();
+  let processing = $state(false);
 </script>
 
 <PageHead title="Events Manager" thumbnail={null} description={null} />

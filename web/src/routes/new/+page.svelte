@@ -1,14 +1,47 @@
 <script lang="ts">
   import { assert, flatten, safeParse } from "valibot";
 
+  import { goto } from "$app/navigation";
   import { createClient } from "@/client";
+  import EventInspector from "@/components/debugger/EventInspector.svelte";
   import { GetsetDatetime } from "@/lib/GetsetDatetime.svelte";
   import { toastContext } from "@/lib/toast/controller.svelte";
   import { InsertEvent } from "@stack/server/validator/schema.ts";
 
-  const form: Partial<InsertEvent> = $state({});
+  let form: Partial<InsertEvent> = $state({});
   let errors: Record<string, string | string[] | undefined> | undefined =
     $state(undefined);
+  let createMore = $state(false);
+
+  const DayOption = [
+    {
+      label: "Normal",
+      options: {
+        allday: false,
+        multiday: false,
+      },
+    },
+    {
+      label: "All Day",
+      options: {
+        allday: true,
+        multiday: false,
+      },
+    },
+    {
+      label: "Multi Day",
+      options: {
+        allday: true,
+        multiday: true,
+      },
+    },
+  ] as const;
+  type DayOption = (typeof DayOption)[number];
+  let dayOption = $state<DayOption>(DayOption[0]);
+  $effect(() => {
+    form.allday = dayOption.options.allday;
+    form.multiday = dayOption.options.multiday;
+  });
 
   const client = createClient({ fetch });
   const toast = toastContext.get();
@@ -27,9 +60,9 @@
   );
 </script>
 
-<main>
+<main class="mx-auto mt-10 max-w-lg">
   <form
-    class="item-end mx-auto mt-10 flex max-w-lg flex-col gap-2 pt-2"
+    class="item-end flex flex-col gap-2 pt-2"
     onsubmit={async (ev) => {
       ev.preventDefault();
       if (form.allday) {
@@ -40,7 +73,6 @@
         endDate.date = startDate.date;
         console.log(startDate.date);
       }
-      console.log("form", $state.snapshot(form));
       const result = safeParse(InsertEvent, form);
       if (!result.success) {
         console.error(result.issues);
@@ -60,25 +92,32 @@
         content: "successfully created",
         color: "alert-success",
       });
+      if (createMore) {
+        form = {
+          allday: dayOption.options.allday,
+          multiday: dayOption.options.multiday,
+        };
+      } else {
+        goto("/");
+      }
     }}
   >
     <h1 class="pb-2 text-xl">Create new event</h1>
 
     {@render TextInput("Name (required)", { name: "name", required: true })}
     {@render TextInput("Description", { name: "description" })}
-    <fieldset
-      class="fieldset bg-base-100 border-base-300 rounded-xl border p-4"
-    >
-      <legend class="fieldset-legend">Date options</legend>
-      <label class="fieldset-label">
-        <input type="checkbox" class="toggle" bind:checked={form.allday} />
-        <span class="select-none">All day event?</span>
-      </label>
-      <label class="fieldset-label">
-        <input type="checkbox" class="toggle" bind:checked={form.multiday} />
-        <span class="select-none">Does it span across multiple days?</span>
-      </label>
-    </fieldset>
+
+    <div role="tablist" class="tabs tabs-border">
+      {#each DayOption as option, i (i)}
+        <input
+          type="radio"
+          class="tab"
+          value={option}
+          aria-label={option.label}
+          bind:group={dayOption}
+        />
+      {/each}
+    </div>
 
     <fieldset
       class="fieldset bg-base-100 border-base-300 flex-col gap-4 rounded-xl border p-4"
@@ -102,13 +141,8 @@
         </label>
         {#if !form.multiday}
           <label class="fieldset-label">
-            <input
-              type="time"
-              class="input"
-              required
-              bind:value={endDate.time}
-            />
-            End
+            <input type="time" class="input" bind:value={endDate.time} />
+            End (optional)
           </label>
         {/if}
       {/if}
@@ -123,19 +157,22 @@
         </label>
         {#if !form.allday}
           <label class="fieldset-label">
-            <input
-              type="time"
-              class="input"
-              required
-              bind:value={endDate.time}
-            />
+            <input type="time" class="input" bind:value={endDate.time} />
             End
           </label>
         {/if}
       </fieldset>
     {/if}
-    <button type="submit" class="btn btn-primary mt-4">Create</button>
+    <div class=" flex max-w-88 flex-row items-center gap-4 p-4">
+      <label class="fieldset-label">
+        <input type="checkbox" bind:checked={createMore} class="toggle" />
+        <span>Create more</span>
+      </label>
+      <span class="flex-grow"></span>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </div>
   </form>
+  <EventInspector event={form} />
 </main>
 
 {#snippet TextInput(
