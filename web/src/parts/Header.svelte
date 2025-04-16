@@ -6,11 +6,11 @@
 </script>
 
 <header
-  class="bg-base-100/60 border-base-300 sticky top-6 m-6 flex h-14 flex-row flex-wrap items-center gap-8 rounded-xl border px-6 backdrop-blur-md"
+  class="bg-base-100/60 border-base-300 sticky top-6 my-6 flex h-14 flex-row flex-wrap items-center rounded-xl border px-6 backdrop-blur-md sm:mx-6 md:gap-8"
 >
   <a
     href="/"
-    class="hover:bg-base-200 cursor-pointer rounded-xl px-4 py-2 text-xl font-bold transition-[background-color]"
+    class="hover:bg-base-200 h-auto cursor-pointer rounded-xl px-4 py-2 text-xl font-bold transition-[background-color]"
   >
     Events Manager
   </a>

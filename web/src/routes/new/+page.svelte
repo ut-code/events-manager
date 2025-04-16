@@ -60,7 +60,7 @@
   );
 </script>
 
-<main class="mx-auto mt-10 max-w-lg">
+<main class="mx-auto mt-10 max-w-lg px-5">
   <form
     class="item-end flex flex-col gap-2 pt-2"
     onsubmit={async (ev) => {

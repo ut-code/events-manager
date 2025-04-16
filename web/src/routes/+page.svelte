@@ -14,7 +14,7 @@
 
 <PageHead title="Events Manager" thumbnail={null} description={null} />
 
-<main class="mx-auto max-w-lg">
+<main class="mx-auto max-w-lg px-5">
   {#await promise.current}
     loading...
   {:then events}
