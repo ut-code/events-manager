@@ -9,7 +9,7 @@
 
   const client = createClient({ fetch });
   const { data } = $props();
-  const promise = swr("/ events", data.events, array(Event));
+  const promise = swr("/ events", () => data.events, array(Event));
 </script>
 
 <PageHead title="Events Manager" thumbnail={null} description={null} />

@@ -9,13 +9,13 @@ type ValibotSchema<T> = BaseSchema<T, unknown, BaseIssue<unknown>>;
 
 export default function swr<T>(
   cacheKey: string,
-  promise: Promise<T>,
+  getPromise: () => Promise<T>,
   schema: ValibotSchema<T>,
 ) {
   const storageKey = `${APP_ID}:${FEAT_ID}:${cacheKey}`;
 
   const state = $state<{ current: Promise<T> }>({
-    current: promise,
+    current: getPromise(),
   });
   if (!browser) return state;
 
@@ -33,16 +33,21 @@ export default function swr<T>(
     }
   }
 
-  promise.then((v) => {
-    try {
-      assert(schema, v);
-      localStorage.setItem(storageKey, devalue.stringify(v));
-    } catch (err) {
-      console.warn(
-        "[swr] failed to parse incoming value, ignoring it. error:",
-        err,
-      );
-    }
+  $effect(() => {
+    console.log("refreshing cache");
+    getPromise().then((v) => {
+      try {
+        assert(schema, v);
+        console.log("update cache");
+        localStorage.setItem(storageKey, devalue.stringify(v));
+        state.current = Promise.resolve(v);
+      } catch (err) {
+        console.warn(
+          "[swr] failed to parse incoming value, ignoring it. error:",
+          err,
+        );
+      }
+    });
   });
 
   return state;
