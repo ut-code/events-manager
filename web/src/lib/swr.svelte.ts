@@ -7,48 +7,57 @@ const FEAT_ID = "swr-cache";
 
 type ValibotSchema<T> = BaseSchema<T, unknown, BaseIssue<unknown>>;
 
-export default function swr<T>(
-  cacheKey: string,
-  getPromise: () => Promise<T>,
-  schema: ValibotSchema<T>,
-) {
-  const storageKey = `${APP_ID}:${FEAT_ID}:${cacheKey}`;
+export class SWR<T> {
+  private readonly storageKey: string;
+  current: Promise<T> = $state(new Promise(() => {}));
+  constructor(
+    cacheKey: string,
+    getPromise: () => Promise<T>,
+    private readonly schema: ValibotSchema<T>,
+  ) {
+    this.storageKey = `${APP_ID}:${FEAT_ID}:${cacheKey}`;
+    this.current = getPromise();
+    if (!browser) return;
 
-  const state = $state<{ current: Promise<T> }>({
-    current: getPromise(),
-  });
-  if (!browser) return state;
+    const cache = this.read();
+    if (cache != null) {
+      this.current = Promise.resolve(cache);
+    }
 
-  const cache = localStorage.getItem(storageKey);
-  if (cache != null) {
+    $effect(() => {
+      console.log("refreshing cache");
+      getPromise().then((v) => {
+        this.update(v);
+      });
+    });
+  }
+
+  read() {
+    const cache = localStorage.getItem(this.storageKey);
+    if (cache === null) return null;
     try {
       const val = devalue.parse(cache);
-      assert(schema, val);
-      state.current = Promise.resolve(val);
+      assert(this.schema, val);
+      return val;
     } catch (err) {
       console.warn(
         "[swr] failed to parse localStorage value. ignoring it. error:",
         err,
       );
+      return null;
     }
   }
-
-  $effect(() => {
-    console.log("refreshing cache");
-    getPromise().then((v) => {
-      try {
-        assert(schema, v);
-        console.log("update cache");
-        localStorage.setItem(storageKey, devalue.stringify(v));
-        state.current = Promise.resolve(v);
-      } catch (err) {
-        console.warn(
-          "[swr] failed to parse incoming value, ignoring it. error:",
-          err,
-        );
-      }
-    });
-  });
-
-  return state;
+  update(v: T) {
+    try {
+      assert(this.schema, v);
+      console.log("update cache");
+      localStorage.setItem(this.storageKey, devalue.stringify(v));
+      this.current = Promise.resolve(v);
+    } catch (err) {
+      console.warn(
+        "[swr] failed to parse incoming value, ignoring it. error:",
+        err,
+      );
+    }
+  }
 }
